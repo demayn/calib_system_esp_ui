@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/damia/Downloads/ESP32-P4-Module-DEV-KIT_Demo/ESP-IDF/3_Advanced/LVGL/lvgl_demo_v9/managed_components/waveshare__esp_lcd_jd9365
+# Install script for directory: C:/Users/Horli/Espressif/Projekte/calib_system_esp_ui/managed_components/waveshare__esp_lcd_jd9365
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,6 +34,6 @@ endif()
 
 # Set path to fallback-tool for dependency-resolution.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Espressif/frameworks/esp-idf-v5.4/tools/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/riscv32-esp-elf-objdump.exe")
+  set(CMAKE_OBJDUMP "C:/Users/Horli/tools/riscv32-esp-elf/esp-14.2.0_20250730/riscv32-esp-elf/bin/riscv32-esp-elf-objdump.exe")
 endif()
 

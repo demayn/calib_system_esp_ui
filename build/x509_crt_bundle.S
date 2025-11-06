@@ -1,4 +1,4 @@
-/* * Data converted from C:/Users/damia/Downloads/ESP32-P4-Module-DEV-KIT_Demo/ESP-IDF/3_Advanced/LVGL/lvgl_demo_v9/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from C:/Users/Horli/Espressif/Projekte/calib_system_esp_ui/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 #if !defined (__APPLE__) && !defined (__linux__)
@@ -4386,3 +4386,7 @@ _binary_x509_crt_bundle_end: /* for objcopy compatibility */
 .global x509_crt_bundle_length
 x509_crt_bundle_length:
 .long 69876
+
+#if defined (__linux__)
+.section .note.GNU-stack,"",@progbits
+#endif

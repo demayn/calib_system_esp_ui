@@ -50,7 +50,7 @@ void app_main(void)
     ui_events_init();
     
     // Hauptscreen laden
-    loadScreen(SCREEN_ID_MAIN);
+    loadScreen(SCREEN_ID_SCREEN_MAIN);
 
     ESP_LOGI(TAG, "UI loaded");
 

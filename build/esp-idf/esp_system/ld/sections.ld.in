@@ -11,7 +11,7 @@
 
  * Automatically generated file. DO NOT EDIT.
 
- * Espressif IoT Development Framework (ESP-IDF) 5.4.0 Configuration Header
+ * Espressif IoT Development Framework (ESP-IDF) 5.4.3 Configuration Header
 
  */
        
@@ -342,6 +342,12 @@ SECTIONS
 
      */
     . += 16;
+    /* Align the end of flash text region as per PMP granularity to allow using the
+
+     * page alignment gap created while mapping the flash region into the PSRAM memory.
+
+     */
+    . = ALIGN(128);
     _text_end = ABSOLUTE(.);
     /**
 
@@ -486,6 +492,12 @@ SECTIONS
     _thread_local_data_start = ABSOLUTE(.);
     *(.tdata .tdata.* .gnu.linkonce.td.*)
     . = ALIGN(ALIGNOF(.flash.tbss));
+    /* Align the end of flash rodata region as per PMP granularity to allow using the
+
+     * page alignment gap created while mapping the flash region into the PSRAM memory.
+
+     */
+    . = ALIGN(128);
     _thread_local_data_end = ABSOLUTE(.);
   } > rodata_seg_low
   ASSERT((ADDR(.flash.tbss) == ADDR(.flash.tdata) + SIZEOF(.flash.tdata)), "The gap between .flash.tdata and .flash.tbss must not exist to produce the final bin image.")
