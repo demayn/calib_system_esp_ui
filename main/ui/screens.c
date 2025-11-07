@@ -119,7 +119,7 @@ void create_screen_screen_positioning() {
                 {
                     // label_start_button
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.positionierung_button_label = obj;
+                    objects.label_start_button = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -133,11 +133,13 @@ void create_screen_screen_positioning() {
             objects.button_back = obj;
             lv_obj_set_pos(obj, 927, 669);
             lv_obj_set_size(obj, 256, 82);
+            lv_obj_set_style_outline_color(obj, lv_color_hex(0xff001bff), LV_PART_MAIN | LV_STATE_FOCUS_KEY);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xfffc1788), LV_PART_MAIN | LV_STATE_FOCUS_KEY);
             {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.button_back_label = obj;
+                    objects.label_back_button = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);

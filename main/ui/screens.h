@@ -19,10 +19,10 @@ typedef struct _objects_t {
     lv_obj_t *manuell_1;
     lv_obj_t *help;
     lv_obj_t *positionierung_start;
-    lv_obj_t *positionierung_button_label;
+    lv_obj_t *label_start_button;
     lv_obj_t *positionierung_spinnbox;
     lv_obj_t *button_back;
-    lv_obj_t *button_back_label;
+    lv_obj_t *label_back_button;
     lv_obj_t *positionierung_btnmatrix;
 } objects_t;
 
