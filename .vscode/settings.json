@@ -3,5 +3,8 @@
     "idf.portWin": "COM6",
     "idf.espIdfPathWin": "c:\\Users\\Horli\\Espressif\\v5.4.3\\esp-idf",
     "idf.toolsPathWin": "c:\\Users\\Horli",
-    "idf.pythonInstallPath": "c:\\Users\\Horli\\tools\\idf-python\\3.11.2\\python.exe"
+    "idf.pythonInstallPath": "c:\\Users\\Horli\\tools\\idf-python\\3.11.2\\python.exe",
+    "files.associations": {
+        "bsp_board_extra.h": "c"
+    }
 }
