@@ -128,26 +128,6 @@ void create_screen_screen_positioning() {
             }
         }
         {
-            // button_back
-            lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.button_back = obj;
-            lv_obj_set_pos(obj, 927, 669);
-            lv_obj_set_size(obj, 256, 82);
-            lv_obj_set_style_outline_color(obj, lv_color_hex(0xff001bff), LV_PART_MAIN | LV_STATE_FOCUS_KEY);
-            lv_obj_set_style_bg_color(obj, lv_color_hex(0xfffc1788), LV_PART_MAIN | LV_STATE_FOCUS_KEY);
-            {
-                lv_obj_t *parent_obj = obj;
-                {
-                    lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.label_back_button = obj;
-                    lv_obj_set_pos(obj, 0, 0);
-                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "Back");
-                }
-            }
-        }
-        {
             // positionierung_spinnbox
             lv_obj_t *obj = lv_spinbox_create(parent_obj);
             objects.positionierung_spinnbox = obj;
@@ -184,7 +164,27 @@ void create_screen_screen_positioning() {
             };
             lv_btnmatrix_set_map(obj, map);
         }
-        
+        {
+            // button_back
+            lv_obj_t *obj = lv_btn_create(parent_obj);
+            objects.button_back = obj;
+            lv_obj_set_pos(obj, 927, 669);
+            lv_obj_set_size(obj, 256, 82);
+            lv_obj_set_style_outline_color(obj, lv_color_hex(0xff001bff), LV_PART_MAIN | LV_STATE_FOCUS_KEY);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xfffc1788), LV_PART_MAIN | LV_STATE_FOCUS_KEY);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    // label_back_button
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.label_back_button = obj;
+                    lv_obj_set_pos(obj, 0, 0);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_label_set_text(obj, "Back");
+                }
+            }
+        }
     }
     
     tick_screen_screen_positioning();
