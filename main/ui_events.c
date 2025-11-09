@@ -13,11 +13,27 @@ static const char *TAG = "ui_events";
 static void button_event_handler(lv_event_t * e)
 {
     lv_obj_t * btn = lv_event_get_target(e);
-    
+    // Hauptbildschirm Buttons
     if (btn == objects.positionierung) {
         ESP_LOGI(TAG, "Positionierung button pressed");
         loadScreen(SCREEN_ID_SCREEN_POSITIONING);
     }
+    else if (btn == objects.kalibrierung) {
+        ESP_LOGI(TAG, "Kalibrierung button pressed");
+        loadScreen(SCREEN_ID_SCREEN_CALIBRATION);
+    }
+    else if (btn == objects.settings) {
+        ESP_LOGI(TAG, "Settings button pressed");
+        loadScreen(SCREEN_ID_SCREEN_SETTING);
+    }
+    else if (btn == objects.manuell_1) {  
+        ESP_LOGI(TAG, "Help button pressed");
+        loadScreen(SCREEN_ID_SCREEN_HELP);
+    }
+    
+
+
+    //Positionierung Screen
     else if (btn == objects.positionierung_start) {
         ESP_LOGI(TAG, "Start button pressed");
         // Deine Aktion hier
@@ -26,20 +42,23 @@ static void button_event_handler(lv_event_t * e)
         ESP_LOGI(TAG, "Back button pressed");
         loadScreen(SCREEN_ID_SCREEN_MAIN);
     }
-    
-    else if (btn == objects.kalibrierung) {
-        ESP_LOGI(TAG, "Kalibrierung button pressed");
-        loadScreen(SCREEN_ID_SCREEN_CALIBRATION);
+
+    // Kalibrierung Screen
+    else if (btn == objects.calibration_back) {
+        ESP_LOGI(TAG, "Back button pressed");
+        loadScreen(SCREEN_ID_SCREEN_MAIN);
     }
-    else if (btn == objects.settings) {
-        ESP_LOGI(TAG, "Settings button pressed");
-        // Deine Aktion hier
+    // Settings Screen
+    else if (btn == objects.setting_back) {
+        ESP_LOGI(TAG, "Back button pressed");
+        loadScreen(SCREEN_ID_SCREEN_MAIN);
     }
-    else if (btn == objects.manuell_1) {  // Help button
-        ESP_LOGI(TAG, "Help button pressed");
-        // Deine Aktion hier
+    // Help Screen
+    else if (btn == objects.help_back) {
+        ESP_LOGI(TAG, "Back button pressed");
+        loadScreen(SCREEN_ID_SCREEN_MAIN);
     }
-    
+        
 }
 
 
@@ -106,4 +125,11 @@ void ui_events_init(void)
     lv_obj_add_event_cb(objects.button_back, button_event_handler, LV_EVENT_CLICKED, NULL);
     // Button-Matrix Event 
     lv_obj_add_event_cb(objects.positionierung_btnmatrix, button_matrix_event_handler, LV_EVENT_CLICKED, NULL);
+    // Calibration Screen Buttons
+    lv_obj_add_event_cb(objects.calibration_back, button_event_handler, LV_EVENT_CLICKED, NULL);
+    // Settings Screen Buttons
+    lv_obj_add_event_cb(objects.setting_back, button_event_handler, LV_EVENT_CLICKED, NULL);
+    // Help Screen Buttons
+    lv_obj_add_event_cb(objects.help_back, button_event_handler, LV_EVENT_CLICKED, NULL);   
+
 }
