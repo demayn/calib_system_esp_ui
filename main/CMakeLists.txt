@@ -11,12 +11,13 @@ set(UI_SOURCES
 )
 
 # WiFi Controller
-set(WIFI_SOURCES
+set(CONTROLLER_SOURCES
     wifi_controller.c
+    mqtt_controller.c
 )
 
 idf_component_register(
-    SRCS main.c ${UI_SOURCES} ${WIFI_SOURCES} ${LV_DEMOS_SOURCES}
+    SRCS main.c ${UI_SOURCES} ${CONTROLLER_SOURCES} ${LV_DEMOS_SOURCES}
     INCLUDE_DIRS . ui ${LV_DEMO_DIR}
 )
 

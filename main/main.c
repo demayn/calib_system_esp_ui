@@ -11,6 +11,7 @@
 #include "ui/ui.h"
 #include "ui/screens.h"
 #include "wifi_controller.h"
+#include "mqtt_controller.h"
 
 static const char *TAG = "main";
 
@@ -26,9 +27,14 @@ void app_main(void)
     }
     ESP_ERROR_CHECK(ret);
 
-    // WiFi initialisieren (jetzt aus separatem Modul)
+    // WiFi initialisieren 
     ESP_LOGI(TAG, "Initializing WiFi...");
     wifi_init_sta();
+
+    // MQTT initialisieren
+    ESP_LOGI(TAG, "Initializing MQTT...");
+    mqtt_app_start();
+
 
     // Display initialisieren
     bsp_display_cfg_t cfg = {
