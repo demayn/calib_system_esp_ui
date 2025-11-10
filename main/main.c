@@ -78,6 +78,7 @@ void app_main(void)
         // UI Tick aufrufen (falls benötigt)
         bsp_display_lock(0);
         ui_tick();
+        mqtt_process_ui_updates();
         bsp_display_unlock();
     }
 }

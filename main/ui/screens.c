@@ -184,6 +184,14 @@ void create_screen_screen_positioning() {
                 }
             }
         }
+        {
+            // positionierung_istwert
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            objects.positionierung_istwert = obj;
+            lv_obj_set_pos(obj, 409, 169);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Istwert wird empfanegen...");
+        }
     }
     
     tick_screen_screen_positioning();
@@ -197,6 +205,7 @@ void create_screen_screen_setting() {
     objects.screen_setting = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 1280, 800);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -229,6 +238,7 @@ void create_screen_screen_help() {
     objects.screen_help = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 1280, 800);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -261,6 +271,7 @@ void create_screen_screen_calibration() {
     objects.screen_calibration = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 1280, 800);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {

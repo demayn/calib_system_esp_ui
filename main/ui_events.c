@@ -9,6 +9,22 @@
 
 static const char *TAG = "ui_events";
 
+// Handler für MQTT Nachrichten (wird vom Haupttask aufgerufen)
+void ui_handle_mqtt_message(const char* topic, const char* data)
+{
+    ESP_LOGI(TAG, "UI handling MQTT message - Topic: %s, Data: %s", topic, data);
+    
+    // Prüfe ob es eine Istwert-Nachricht ist
+    if (strcmp(topic, "istwert") == 0) {
+        ESP_LOGI(TAG, "Updating istwert label with: %s", data);
+        
+        // Aktualisiere das Istwert-Label - JETZT sicher da wir im Haupttask sind
+        if (objects.positionierung_istwert != NULL) {
+            lv_label_set_text(objects.positionierung_istwert, data);
+        }
+    }
+}
+
 // Event Callback für Buttons
 static void button_event_handler(lv_event_t * e)
 {
@@ -115,6 +131,8 @@ static void button_matrix_event_handler(lv_event_t * e)
 // Events registrieren
 void ui_events_init(void)
 {
+
+    
     // Main Screen Buttons
     lv_obj_add_event_cb(objects.positionierung, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.kalibrierung, button_event_handler, LV_EVENT_CLICKED, NULL);
