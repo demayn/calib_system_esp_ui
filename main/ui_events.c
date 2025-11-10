@@ -5,6 +5,7 @@
 #include "esp_event.h"
 #include "esp_wifi.h"
 #include "esp_netif.h"
+#include "mqtt_controller.h"
 
 static const char *TAG = "ui_events";
 
@@ -34,8 +35,9 @@ static void button_event_handler(lv_event_t * e)
 
     //Positionierung Screen
     else if (btn == objects.positionierung_start) {
-        ESP_LOGI(TAG, "Start button pressed");
-        // Deine Aktion hier
+        ESP_LOGI(TAG, "Start button pressed - Sending MQTT message");
+        // MQTT Nachricht senden
+        mqtt_publish_message("positionierung", "start");
     }
     else if (btn == objects.button_back) {
         ESP_LOGI(TAG, "Back button pressed");

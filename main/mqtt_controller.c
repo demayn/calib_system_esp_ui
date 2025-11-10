@@ -55,7 +55,7 @@ void mqtt_publish_message(const char* topic, const char* data)
 {
     if (mqtt_connected && client) {
         int msg_id = esp_mqtt_client_publish(client, topic, data, 0, 1, 0);
-        ESP_LOGI(TAG, "Sent publish successful, msg_id=%d, topic=%s, data=%s", msg_id, topic, data);
+        ESP_LOGI(TAG, "Sent publish: msg_id=%d, topic=%s, data=%s", msg_id, topic, data);
     } else {
         ESP_LOGW(TAG, "MQTT not connected, cannot publish to topic=%s", topic);
     }
