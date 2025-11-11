@@ -1,19 +1,20 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "nvs_flash.h"
-#include "nvs.h"
 #include "esp_log.h"
 #include "esp_err.h"
-#include "esp_check.h"
-#include "esp_memory_utils.h"
 #include "lvgl.h"
 #include "bsp/esp-bsp.h"
 #include "bsp/display.h"
-#include "bsp_board_extra.h"
 
-// Deine UI einbinden
+// Ihre UI einbinden
+#include "ui_events.h"
 #include "ui/ui.h"
 #include "ui/screens.h"
+#include "wifi_controller.h"
+#include "mqtt_controller.h"
+
+#include "positioning.h"
 
 static const char *TAG = "main";
 
@@ -21,6 +22,23 @@ void app_main(void)
 {
     ESP_LOGI(TAG, "Initializing...");
     
+    // Initialize NVS
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+
+    // WiFi initialisieren 
+    ESP_LOGI(TAG, "Initializing WiFi...");
+    wifi_init_sta();
+
+    // MQTT initialisieren
+    ESP_LOGI(TAG, "Initializing MQTT...");
+    mqtt_app_start();
+
+
     // Display initialisieren
     bsp_display_cfg_t cfg = {
         .lvgl_port_cfg = ESP_LVGL_PORT_INIT_CONFIG(),
@@ -35,23 +53,21 @@ void app_main(void)
     
     bsp_display_start_with_config(&cfg);
     bsp_display_backlight_on();
-
     ESP_LOGI(TAG, "Display initialized");
 
     // LVGL Lock nehmen
     bsp_display_lock(0);
 
     lv_disp_set_rotation(lv_disp_get_default(), LV_DISP_ROTATION_270);
-    // Deine UI initialisieren
+    
+    // Ihre UI initialisieren
     ui_init();
 
     // Events initialisieren
-    extern void ui_events_init(void);
     ui_events_init();
     
     // Hauptscreen laden
-    loadScreen(SCREEN_ID_MAIN);
-
+    loadScreen(SCREEN_ID_SCREEN_MAIN);
     ESP_LOGI(TAG, "UI loaded");
 
     // LVGL Lock freigeben
@@ -64,6 +80,7 @@ void app_main(void)
         // UI Tick aufrufen (falls benötigt)
         bsp_display_lock(0);
         ui_tick();
+        mqtt_process_ui_updates();
         bsp_display_unlock();
     }
 }
