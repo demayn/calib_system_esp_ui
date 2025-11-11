@@ -8,6 +8,7 @@
 #include "bsp/display.h"
 
 // Ihre UI einbinden
+#include "ui_events.h"
 #include "ui/ui.h"
 #include "ui/screens.h"
 #include "wifi_controller.h"
@@ -61,7 +62,6 @@ void app_main(void)
     ui_init();
 
     // Events initialisieren
-    extern void ui_events_init(void);
     ui_events_init();
     
     // Hauptscreen laden
