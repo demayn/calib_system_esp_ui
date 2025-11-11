@@ -10,6 +10,7 @@
 #include "calibration.h"
 #include "settings.h"
 #include "help.h"
+#include "message_router.h"
 
 static const char *TAG = "ui_events";
 
@@ -36,13 +37,8 @@ static void settings_update_callback(const char* setting, const char* value)
 // Handler für MQTT Nachrichten
 void ui_handle_mqtt_message(const char* topic, const char* data)
 {
-    ESP_LOGI(TAG, "UI handling MQTT message - Topic: %s, Data: %s", topic, data);
-    
-    // Nachrichten an entsprechende Module weiterleiten
-    positioning_handle_mqtt_message(topic, data);
-    calibration_handle_mqtt_message(topic, data);
-    settings_handle_mqtt_message(topic, data);
-    help_handle_mqtt_message(topic, data);
+    ESP_LOGI(TAG, "UI received MQTT message");
+    message_router_handle(topic, data);
 }
 
 // Event Callback für Buttons (erweitert)

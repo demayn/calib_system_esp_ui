@@ -10,6 +10,7 @@
         "esp_wifi.h": "c",
         "positioning.h": "c",
         "ui.h": "c",
-        "calibration.h": "c"
+        "calibration.h": "c",
+        "help.h": "c"
     }
 }

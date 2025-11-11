@@ -7,7 +7,7 @@
 #include "bsp/esp-bsp.h"
 #include "bsp/display.h"
 
-// Ihre UI einbinden
+// UI einbinden
 #include "ui_events.h"
 #include "ui/ui.h"
 #include "ui/screens.h"

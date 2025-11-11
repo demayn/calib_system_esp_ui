@@ -22,6 +22,7 @@ set(APP_SOURCES
     app/calibration.c
     app/help.c
     app/settings.c
+    app/message_router.c
 )
 
 idf_component_register(
