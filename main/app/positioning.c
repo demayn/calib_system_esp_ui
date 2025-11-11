@@ -2,6 +2,7 @@
 #include "esp_log.h"
 #include "string.h"
 #include "mqtt_controller.h"
+#include "mqtt_topics.h"
 
 static const char *TAG = "positioning";
 static positioning_istwert_callback_t istwert_callback = NULL;
@@ -25,13 +26,13 @@ void positioning_handle_mqtt_message(const char* topic, const char* data)
 void positioning_start(void)
 {
     ESP_LOGI(TAG, "Starting positioning");
-    mqtt_publish_message("positionierung", "start");
+    mqtt_publish_message(TOPIC_CMD_POSITIONING_START, "1");
 }
 
 /*
 void positioning_stop(void)
 {
     ESP_LOGI(TAG, "Stopping positioning");
-    mqtt_publish_message("positionierung", "stop");
+    mqtt_publish_message(TOPIC_CMD_POSITIONING_STOP, "0");
 }
 */
