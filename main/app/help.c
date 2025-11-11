@@ -1,6 +1,8 @@
 #include "help.h"
 #include "esp_log.h"
 #include "string.h"
+#include "mqtt_controller.h"
+#include "mqtt_topics.h"
 
 static const char *TAG = "help";
 static int current_page = 0;

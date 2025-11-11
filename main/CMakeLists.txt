@@ -10,10 +10,10 @@ set(UI_SOURCES
     ui_events.c
 )
 
-# WiFi Controller
-set(CONTROLLER_SOURCES
-    wifi_controller.c
-    mqtt_controller.c
+# Network Services
+set(NETWORK_SOURCES
+    network_service/mqtt_controller.c
+    network_service/wifi_controller.c
 )
 
 #Buissness Logic
@@ -22,11 +22,13 @@ set(APP_SOURCES
     app/calibration.c
     app/help.c
     app/settings.c
+    app/message_router.c
+    app/error_handler.c
 )
 
 idf_component_register(
-    SRCS main.c ${UI_SOURCES} ${APP_SOURCES} ${CONTROLLER_SOURCES} ${LV_DEMOS_SOURCES}
-    INCLUDE_DIRS . ui app ${LV_DEMO_DIR}
+    SRCS main.c ${UI_SOURCES} ${APP_SOURCES} ${NETWORK_SOURCES} ${LV_DEMOS_SOURCES}
+    INCLUDE_DIRS . ui app network_service ${LV_DEMO_DIR}
 )
 
 idf_component_get_property(LVGL_LIB lvgl__lvgl COMPONENT_LIB)

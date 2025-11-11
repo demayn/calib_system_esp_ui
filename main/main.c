@@ -6,8 +6,9 @@
 #include "lvgl.h"
 #include "bsp/esp-bsp.h"
 #include "bsp/display.h"
+#include "error_handler.h"  
 
-// Ihre UI einbinden
+// UI einbinden
 #include "ui_events.h"
 #include "ui/ui.h"
 #include "ui/screens.h"
@@ -29,6 +30,10 @@ void app_main(void)
         ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK(ret);
+
+    // Error Handler initialisieren
+    error_handler_init(); 
+
 
     // WiFi initialisieren 
     ESP_LOGI(TAG, "Initializing WiFi...");

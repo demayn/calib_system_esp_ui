@@ -2,6 +2,7 @@
 #include "esp_log.h"
 #include "string.h"
 #include "mqtt_controller.h"
+#include "mqtt_topics.h"
 
 static const char *TAG = "settings";
 static settings_callback_t settings_callback = NULL;
@@ -15,8 +16,8 @@ void settings_init(settings_callback_t callback)
 void settings_handle_mqtt_message(const char* topic, const char* data)
 {
     ESP_LOGI(TAG, "Handling MQTT message - Topic: %s, Data: %s", topic, data);
-    
-    if (strcmp(topic, "settings") == 0 && settings_callback != NULL) {
+
+    if (strcmp(topic, TOPIC_DATA_SETTINGS_UPDATE) == 0 && settings_callback != NULL) {
         settings_callback("update", data);
     }
 }

@@ -4,6 +4,8 @@
 #include "mqtt_client.h"
 #include "freertos/queue.h"
 #include "string.h"
+#include "mqtt_topics.h"
+#include "error_handler.h"
 
 static const char *TAG = "mqtt_controller";
 
@@ -28,9 +30,12 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
             ESP_LOGI(TAG, "MQTT Connected");
             mqtt_connected = true;
             
-            // Subscribe to istwert topic when connected
-            esp_mqtt_client_subscribe(client, "istwert", 0);
-            ESP_LOGI(TAG, "Subscribed to topic: istwert");
+            // Subscribe to ALL data topics
+            esp_mqtt_client_subscribe(client, TOPIC_DATA_ISTWERT, MQTT_QOS_0);
+            esp_mqtt_client_subscribe(client, TOPIC_DATA_CALIBRATION_STATUS, MQTT_QOS_0);
+            //hier weitere Topics hinzufügen falls nötig und über main/mqtt_topics.h definieren
+            
+            ESP_LOGI(TAG, "Subscribed to all data topics");
             break;
             
         case MQTT_EVENT_DISCONNECTED:
@@ -92,7 +97,7 @@ void mqtt_publish_message(const char* topic, const char* data)
         int msg_id = esp_mqtt_client_publish(client, topic, data, 0, 1, 0);
         ESP_LOGI(TAG, "MQTT publish: msg_id=%d, topic=%s, data=%s", msg_id, topic, data);
     } else {
-        ESP_LOGW(TAG, "MQTT not connected, cannot publish to topic=%s", topic);
+        error_handler_report(ERROR_MQTT_NOT_CONNECTED, topic);
     }
 }
 
