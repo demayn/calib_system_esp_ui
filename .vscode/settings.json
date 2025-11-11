@@ -11,6 +11,7 @@
         "positioning.h": "c",
         "ui.h": "c",
         "calibration.h": "c",
-        "help.h": "c"
+        "help.h": "c",
+        "mqtt_topics.h": "c"
     }
 }

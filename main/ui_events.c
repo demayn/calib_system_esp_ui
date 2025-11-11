@@ -5,7 +5,7 @@
 #include "esp_event.h"
 #include "esp_wifi.h"
 #include "esp_netif.h"
-#include "network_service/mqtt_controller.h"
+#include "mqtt_controller.h"
 #include "positioning.h"
 #include "calibration.h"
 #include "settings.h"

@@ -1,8 +1,8 @@
 #include "settings.h"
 #include "esp_log.h"
 #include "string.h"
-#include "network_service/mqtt_controller.h"
-#include "network_service/mqtt_topics.h"
+#include "mqtt_controller.h"
+#include "mqtt_topics.h"
 
 static const char *TAG = "settings";
 static settings_callback_t settings_callback = NULL;

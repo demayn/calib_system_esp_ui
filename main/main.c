@@ -11,8 +11,8 @@
 #include "ui_events.h"
 #include "ui/ui.h"
 #include "ui/screens.h"
-#include "network_service/wifi_controller.h"
-#include "network_service/mqtt_controller.h"
+#include "wifi_controller.h"
+#include "mqtt_controller.h"
 
 #include "positioning.h"
 

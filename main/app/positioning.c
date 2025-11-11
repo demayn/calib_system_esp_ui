@@ -1,8 +1,8 @@
 #include "positioning.h"
 #include "esp_log.h"
 #include "string.h"
-#include "network_service/mqtt_controller.h"
-#include "network_service/mqtt_topics.h"
+#include "mqtt_controller.h"
+#include "mqtt_topics.h"
 
 static const char *TAG = "positioning";
 static positioning_istwert_callback_t istwert_callback = NULL;

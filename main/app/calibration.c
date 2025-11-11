@@ -1,8 +1,8 @@
 #include "calibration.h"
 #include "esp_log.h"
 #include "string.h"
-#include "network_service/mqtt_controller.h"
-#include "network_service/mqtt_topics.h"
+#include "mqtt_controller.h"
+#include "mqtt_topics.h"
 
 static const char *TAG = "calibration";
 static calibration_callback_t calibration_callback = NULL;
