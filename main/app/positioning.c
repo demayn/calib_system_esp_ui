@@ -28,8 +28,10 @@ void positioning_start(void)
     mqtt_publish_message("positionierung", "start");
 }
 
+/*
 void positioning_stop(void)
 {
     ESP_LOGI(TAG, "Stopping positioning");
     mqtt_publish_message("positionierung", "stop");
 }
+*/

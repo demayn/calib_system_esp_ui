@@ -19,6 +19,9 @@ set(CONTROLLER_SOURCES
 #Buissness Logic
 set(APP_SOURCES
     app/positioning.c
+    app/calibration.c
+    app/help.c
+    app/settings.c
 )
 
 idf_component_register(

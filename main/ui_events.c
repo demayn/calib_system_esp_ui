@@ -7,10 +7,13 @@
 #include "esp_netif.h"
 #include "mqtt_controller.h"
 #include "positioning.h"
+#include "calibration.h"
+#include "settings.h"
+#include "help.h"
 
 static const char *TAG = "ui_events";
 
-// Callback für Istwert Updates
+// Callbacks für verschiedene Module
 static void positioning_istwert_update_callback(const char* value)
 {
     if (objects.positionierung_istwert != NULL) {
@@ -18,16 +21,31 @@ static void positioning_istwert_update_callback(const char* value)
     }
 }
 
-// Handler für MQTT Nachrichten (wird vom Haupttask aufgerufen)
+static void calibration_status_callback(const char* parameter, const char* value)
+{
+    ESP_LOGI(TAG, "Calibration update: %s = %s", parameter, value);
+    // Hier können Kalibrierungs-UI-Elemente aktualisiert werden
+}
+
+static void settings_update_callback(const char* setting, const char* value)
+{
+    ESP_LOGI(TAG, "Settings update: %s = %s", setting, value);
+    // Hier können Settings-UI-Elemente aktualisiert werden
+}
+
+// Handler für MQTT Nachrichten
 void ui_handle_mqtt_message(const char* topic, const char* data)
 {
     ESP_LOGI(TAG, "UI handling MQTT message - Topic: %s, Data: %s", topic, data);
     
-    // Weiterleitung an Positioning Module
+    // Nachrichten an entsprechende Module weiterleiten
     positioning_handle_mqtt_message(topic, data);
+    calibration_handle_mqtt_message(topic, data);
+    settings_handle_mqtt_message(topic, data);
+    help_handle_mqtt_message(topic, data);
 }
 
-// Event Callback für Buttons
+// Event Callback für Buttons (erweitert)
 static void button_event_handler(lv_event_t * e)
 {
     lv_obj_t * btn = lv_event_get_target(e);
@@ -53,7 +71,7 @@ static void button_event_handler(lv_event_t * e)
     // Positionierung Screen
     else if (btn == objects.positionierung_start) {
         ESP_LOGI(TAG, "Start button pressed");
-        positioning_start();  // Verwende neue Funktion
+        positioning_start();
     }
     else if (btn == objects.button_back) {
         ESP_LOGI(TAG, "Back button pressed");
@@ -76,6 +94,7 @@ static void button_event_handler(lv_event_t * e)
         loadScreen(SCREEN_ID_SCREEN_MAIN);
     }
 }
+
 
 static void button_matrix_event_handler(lv_event_t * e)
 {
@@ -125,27 +144,24 @@ static void button_matrix_event_handler(lv_event_t * e)
     }
 }
 
-// Events registrieren
 void ui_events_init(void)
 {
-    // Positioning Modul initialisieren
+    // Alle Module initialisieren
     positioning_init(positioning_istwert_update_callback);
+    calibration_init(calibration_status_callback);
+    settings_init(settings_update_callback);
+    help_init();
     
-    // Main Screen Buttons
+    // Event Registrierungen...
     lv_obj_add_event_cb(objects.positionierung, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.kalibrierung, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.settings, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.manuell_1, button_event_handler, LV_EVENT_CLICKED, NULL);
     
-    // Positioning Screen Buttons
     lv_obj_add_event_cb(objects.positionierung_start, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.button_back, button_event_handler, LV_EVENT_CLICKED, NULL);
-    // Button-Matrix Event 
     lv_obj_add_event_cb(objects.positionierung_btnmatrix, button_matrix_event_handler, LV_EVENT_CLICKED, NULL);
-    // Calibration Screen Buttons
     lv_obj_add_event_cb(objects.calibration_back, button_event_handler, LV_EVENT_CLICKED, NULL);
-    // Settings Screen Buttons
     lv_obj_add_event_cb(objects.setting_back, button_event_handler, LV_EVENT_CLICKED, NULL);
-    // Help Screen Buttons
     lv_obj_add_event_cb(objects.help_back, button_event_handler, LV_EVENT_CLICKED, NULL);   
 }
