@@ -14,6 +14,8 @@
 #include "wifi_controller.h"
 #include "mqtt_controller.h"
 
+#include "positioning.h"
+
 static const char *TAG = "main";
 
 void app_main(void)

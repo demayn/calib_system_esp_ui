@@ -6,29 +6,32 @@
 #include "esp_wifi.h"
 #include "esp_netif.h"
 #include "mqtt_controller.h"
+#include "positioning.h"
 
 static const char *TAG = "ui_events";
+
+// Callback für Istwert Updates
+static void positioning_istwert_update_callback(const char* value)
+{
+    if (objects.positionierung_istwert != NULL) {
+        lv_label_set_text(objects.positionierung_istwert, value);
+    }
+}
 
 // Handler für MQTT Nachrichten (wird vom Haupttask aufgerufen)
 void ui_handle_mqtt_message(const char* topic, const char* data)
 {
     ESP_LOGI(TAG, "UI handling MQTT message - Topic: %s, Data: %s", topic, data);
     
-    // Prüfe ob es eine Istwert-Nachricht ist
-    if (strcmp(topic, "istwert") == 0) {
-        ESP_LOGI(TAG, "Updating istwert label with: %s", data);
-        
-        // Aktualisiere das Istwert-Label - JETZT sicher da wir im Haupttask sind
-        if (objects.positionierung_istwert != NULL) {
-            lv_label_set_text(objects.positionierung_istwert, data);
-        }
-    }
+    // Weiterleitung an Positioning Module
+    positioning_handle_mqtt_message(topic, data);
 }
 
 // Event Callback für Buttons
 static void button_event_handler(lv_event_t * e)
 {
     lv_obj_t * btn = lv_event_get_target(e);
+    
     // Hauptbildschirm Buttons
     if (btn == objects.positionierung) {
         ESP_LOGI(TAG, "Positionierung button pressed");
@@ -46,14 +49,11 @@ static void button_event_handler(lv_event_t * e)
         ESP_LOGI(TAG, "Help button pressed");
         loadScreen(SCREEN_ID_SCREEN_HELP);
     }
-    
 
-
-    //Positionierung Screen
+    // Positionierung Screen
     else if (btn == objects.positionierung_start) {
-        ESP_LOGI(TAG, "Start button pressed - Sending MQTT message");
-        // MQTT Nachricht senden
-        mqtt_publish_message("positionierung", "start");
+        ESP_LOGI(TAG, "Start button pressed");
+        positioning_start();  // Verwende neue Funktion
     }
     else if (btn == objects.button_back) {
         ESP_LOGI(TAG, "Back button pressed");
@@ -75,9 +75,7 @@ static void button_event_handler(lv_event_t * e)
         ESP_LOGI(TAG, "Back button pressed");
         loadScreen(SCREEN_ID_SCREEN_MAIN);
     }
-        
 }
-
 
 static void button_matrix_event_handler(lv_event_t * e)
 {
@@ -127,11 +125,11 @@ static void button_matrix_event_handler(lv_event_t * e)
     }
 }
 
-
 // Events registrieren
 void ui_events_init(void)
 {
-
+    // Positioning Modul initialisieren
+    positioning_init(positioning_istwert_update_callback);
     
     // Main Screen Buttons
     lv_obj_add_event_cb(objects.positionierung, button_event_handler, LV_EVENT_CLICKED, NULL);
@@ -150,5 +148,4 @@ void ui_events_init(void)
     lv_obj_add_event_cb(objects.setting_back, button_event_handler, LV_EVENT_CLICKED, NULL);
     // Help Screen Buttons
     lv_obj_add_event_cb(objects.help_back, button_event_handler, LV_EVENT_CLICKED, NULL);   
-
 }

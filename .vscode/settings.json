@@ -7,6 +7,8 @@
     "files.associations": {
         "bsp_board_extra.h": "c",
         "mqtt_controller.h": "c",
-        "esp_wifi.h": "c"
+        "esp_wifi.h": "c",
+        "positioning.h": "c",
+        "ui.h": "c"
     }
 }

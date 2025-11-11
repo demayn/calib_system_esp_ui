@@ -16,9 +16,14 @@ set(CONTROLLER_SOURCES
     mqtt_controller.c
 )
 
+#Buissness Logic
+set(APP_SOURCES
+    app/positioning.c
+)
+
 idf_component_register(
-    SRCS main.c ${UI_SOURCES} ${CONTROLLER_SOURCES} ${LV_DEMOS_SOURCES}
-    INCLUDE_DIRS . ui ${LV_DEMO_DIR}
+    SRCS main.c ${UI_SOURCES} ${APP_SOURCES} ${CONTROLLER_SOURCES} ${LV_DEMOS_SOURCES}
+    INCLUDE_DIRS . ui app ${LV_DEMO_DIR}
 )
 
 idf_component_get_property(LVGL_LIB lvgl__lvgl COMPONENT_LIB)
