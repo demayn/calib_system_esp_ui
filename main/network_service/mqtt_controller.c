@@ -5,6 +5,7 @@
 #include "freertos/queue.h"
 #include "string.h"
 #include "mqtt_topics.h"
+#include "error_handler.h"
 
 static const char *TAG = "mqtt_controller";
 
@@ -96,7 +97,7 @@ void mqtt_publish_message(const char* topic, const char* data)
         int msg_id = esp_mqtt_client_publish(client, topic, data, 0, 1, 0);
         ESP_LOGI(TAG, "MQTT publish: msg_id=%d, topic=%s, data=%s", msg_id, topic, data);
     } else {
-        ESP_LOGW(TAG, "MQTT not connected, cannot publish to topic=%s", topic);
+        error_handler_report(ERROR_MQTT_NOT_CONNECTED, topic);
     }
 }
 

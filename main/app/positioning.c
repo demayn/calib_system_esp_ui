@@ -3,6 +3,8 @@
 #include "string.h"
 #include "mqtt_controller.h"
 #include "mqtt_topics.h"
+#include "error_handler.h"
+
 
 static const char *TAG = "positioning";
 static positioning_istwert_callback_t istwert_callback = NULL;
@@ -25,7 +27,11 @@ void positioning_handle_mqtt_message(const char* topic, const char* data)
 
 void positioning_start(void)
 {
-    ESP_LOGI(TAG, "Starting positioning");
+    if (!mqtt_is_connected()) {
+        error_handler_report(ERROR_MQTT_NOT_CONNECTED, "positioning_start");
+        return;
+    }
+    ESP_LOGI(TAG, "Start");
     mqtt_publish_message(TOPIC_CMD_POSITIONING_START, "1");
 }
 

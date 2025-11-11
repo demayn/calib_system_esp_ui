@@ -11,6 +11,7 @@
 #include "settings.h"
 #include "help.h"
 #include "message_router.h"
+#include "error_handler.h"
 
 static const char *TAG = "ui_events";
 
@@ -19,6 +20,9 @@ static void positioning_istwert_update_callback(const char* value)
 {
     if (objects.positionierung_istwert != NULL) {
         lv_label_set_text(objects.positionierung_istwert, value);
+    }
+     else {
+        error_handler_report(ERROR_UI_OBJECT_NULL, "positionierung_istwert");  // ← FEHLER MELDEN
     }
 }
 
