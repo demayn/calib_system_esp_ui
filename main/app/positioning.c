@@ -16,8 +16,8 @@ void positioning_init(positioning_istwert_callback_t callback)
 void positioning_handle_mqtt_message(const char* topic, const char* data)
 {
     ESP_LOGI(TAG, "Handling MQTT message - Topic: %s, Data: %s", topic, data);
-    
-    if (strcmp(topic, "istwert") == 0 && istwert_callback != NULL) {
+
+    if (strcmp(topic, TOPIC_DATA_ISTWERT) == 0 && istwert_callback != NULL) {
         ESP_LOGI(TAG, "Updating istwert with: %s", data);
         istwert_callback(data);
     }

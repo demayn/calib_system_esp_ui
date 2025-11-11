@@ -30,9 +30,10 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
             mqtt_connected = true;
             
             // Subscribe to ALL data topics
-            esp_mqtt_client_subscribe(client, TOPIC_DATA_ISTWERT, 0);
-            esp_mqtt_client_subscribe(client, TOPIC_DATA_CALIBRATION_STATUS, 0);
-
+            esp_mqtt_client_subscribe(client, TOPIC_DATA_ISTWERT, MQTT_QOS_0);
+            esp_mqtt_client_subscribe(client, TOPIC_DATA_CALIBRATION_STATUS, MQTT_QOS_0);
+            //hier weitere Topics hinzufügen falls nötig und über main/mqtt_topics.h definieren
+            
             ESP_LOGI(TAG, "Subscribed to all data topics");
             break;
             
