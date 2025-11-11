@@ -9,6 +9,8 @@
 // Für Subscriptions incoming - nur zur Dokumentation
 #define TOPIC_DATA_ISTWERT             "positionierung/istwert"
 #define TOPIC_DATA_CALIBRATION_STATUS  "calibration/status"
+#define TOPIC_DATA_SETTINGS_UPDATE     "settings/update"
+
 
 //QoS Level (Quality of Service)
 #define MQTT_QOS_0 0 // Sensor-Daten können auch mal verloren gehen

@@ -10,10 +10,10 @@ set(UI_SOURCES
     ui_events.c
 )
 
-# WiFi Controller
-set(CONTROLLER_SOURCES
-    wifi_controller.c
-    mqtt_controller.c
+# Network Services
+set(NETWORK_SOURCES
+    network_service/mqtt_controller.c
+    network_service/wifi_controller.c
 )
 
 #Buissness Logic
@@ -25,7 +25,7 @@ set(APP_SOURCES
 )
 
 idf_component_register(
-    SRCS main.c ${UI_SOURCES} ${APP_SOURCES} ${CONTROLLER_SOURCES} ${LV_DEMOS_SOURCES}
+    SRCS main.c ${UI_SOURCES} ${APP_SOURCES} ${NETWORK_SOURCES} ${LV_DEMOS_SOURCES}
     INCLUDE_DIRS . ui app ${LV_DEMO_DIR}
 )
 

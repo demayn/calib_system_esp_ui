@@ -1,7 +1,8 @@
 #include "calibration.h"
 #include "esp_log.h"
 #include "string.h"
-#include "mqtt_controller.h"
+#include "network_service/mqtt_controller.h"
+#include "network_service/mqtt_topics.h"
 
 static const char *TAG = "calibration";
 static calibration_callback_t calibration_callback = NULL;
@@ -17,7 +18,7 @@ void calibration_handle_mqtt_message(const char* topic, const char* data)
     ESP_LOGI(TAG, "Handling MQTT message - Topic: %s, Data: %s", topic, data);
     
     // Hier können Kalibrierungs-spezifische MQTT Nachrichten verarbeitet werden
-    if (strcmp(topic, "calibration") == 0 && calibration_callback != NULL) {
+    if (strcmp(topic, TOPIC_DATA_CALIBRATION_STATUS) == 0 && calibration_callback != NULL) {
         calibration_callback("status", data);
     }
 }
