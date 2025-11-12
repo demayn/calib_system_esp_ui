@@ -22,6 +22,7 @@ typedef struct _objects_t {
     lv_obj_t *positionierung_btnmatrix;
     lv_obj_t *button_back;
     lv_obj_t *positionierung_istwert;
+    lv_obj_t *positionierung_not_used_istwert_label;
     lv_obj_t *setting_back;
     lv_obj_t *help_back;
     lv_obj_t *calibration_back;
