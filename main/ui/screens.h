@@ -26,6 +26,7 @@ typedef struct _objects_t {
     lv_obj_t *setting_back;
     lv_obj_t *help_back;
     lv_obj_t *calibration_back;
+    lv_obj_t *calibration_start_button;
 } objects_t;
 
 extern objects_t objects;
