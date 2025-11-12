@@ -2,7 +2,6 @@
 #include "ui/ui.h"
 #include "esp_log.h"
 #include "string.h"
-#include "message_router.h"
 #include "error_handler.h"
 #include "positioning.h"  
 #include "message_bus.h"

@@ -6,7 +6,6 @@ extern "C" {
 #endif
 
 void ui_events_init(void);
-void ui_handle_mqtt_message(const char* topic, const char* data);
 
 #ifdef __cplusplus
 }
