@@ -14,7 +14,11 @@
 #include "ui/screens.h"
 #include "wifi_controller.h"
 #include "mqtt_controller.h"
-
+// Module einbinden
+#include "calibration.h"
+#include "message_bus.h"
+#include "settings.h"
+#include "help.h"
 #include "positioning.h"
 
 static const char *TAG = "main";
@@ -63,14 +67,22 @@ void app_main(void)
     // LVGL Lock nehmen
     bsp_display_lock(0);
 
-    lv_disp_set_rotation(lv_disp_get_default(), LV_DISP_ROTATION_270);
     
-    // Ihre UI initialisieren
-    ui_init();
+    // Message Bus initialisieren
+    message_bus_init();
 
-    // Events initialisieren
+
+    // Ihre UI initialisieren
+    lv_disp_set_rotation(lv_disp_get_default(), LV_DISP_ROTATION_270);
+    ui_init();
     ui_events_init();
     
+    // Module separat initialisieren
+    positioning_init();
+    calibration_init(); 
+    settings_init();
+    help_init();
+
     // Hauptscreen laden
     loadScreen(SCREEN_ID_SCREEN_MAIN);
     ESP_LOGI(TAG, "UI loaded");

@@ -24,6 +24,7 @@ set(APP_SOURCES
     app/settings.c
     app/message_router.c
     app/error_handler.c
+    app/message_bus.c
 )
 
 idf_component_register(

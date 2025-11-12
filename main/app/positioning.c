@@ -1,27 +1,42 @@
 #include "positioning.h"
 #include "esp_log.h"
 #include "string.h"
-#include "mqtt_controller.h"
+#include "message_bus.h"
 #include "mqtt_topics.h"
 #include "error_handler.h"
-
+#include "mqtt_controller.h"
 
 static const char *TAG = "positioning";
-static positioning_istwert_callback_t istwert_callback = NULL;
 
-void positioning_init(positioning_istwert_callback_t callback)
+static void positioning_message_handler(const message_t* msg)
 {
-    istwert_callback = callback;
+    switch(msg->type) {
+        case MSG_POSITIONING_ISTWERT:
+            ESP_LOGI(TAG, "Updating istwert with: %s", msg->data);
+            // UI Update über Message Bus statt direktem Callback
+            break;
+        default:
+            break;
+    }
+}
+
+void positioning_init(void)
+{
+    message_bus_subscribe(MSG_POSITIONING_ISTWERT, positioning_message_handler);
     ESP_LOGI(TAG, "Positioning module initialized");
 }
 
-void positioning_handle_mqtt_message(const char* topic, const char* data)
+void positioning_handle_message(const char* topic, const char* data)
 {
     ESP_LOGI(TAG, "Handling MQTT message - Topic: %s, Data: %s", topic, data);
 
-    if (strcmp(topic, TOPIC_DATA_ISTWERT) == 0 && istwert_callback != NULL) {
-        ESP_LOGI(TAG, "Updating istwert with: %s", data);
-        istwert_callback(data);
+    if (strcmp(topic, TOPIC_DATA_ISTWERT) == 0) {
+        message_t msg = {
+            .type = MSG_POSITIONING_ISTWERT,
+            .topic = topic,
+            .data = data
+        };
+        message_bus_publish(&msg);
     }
 }
 
@@ -34,11 +49,3 @@ void positioning_start(void)
     ESP_LOGI(TAG, "Start");
     mqtt_publish_message(TOPIC_CMD_POSITIONING_START, "1");
 }
-
-/*
-void positioning_stop(void)
-{
-    ESP_LOGI(TAG, "Stopping positioning");
-    mqtt_publish_message(TOPIC_CMD_POSITIONING_STOP, "0");
-}
-*/

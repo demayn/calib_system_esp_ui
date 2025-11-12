@@ -2,52 +2,14 @@
 #include "ui/ui.h"
 #include "esp_log.h"
 #include "string.h"
-#include "esp_event.h"
-#include "esp_wifi.h"
-#include "esp_netif.h"
-#include "mqtt_controller.h"
-#include "positioning.h"
-#include "calibration.h"
-#include "settings.h"
-#include "help.h"
 #include "message_router.h"
 #include "error_handler.h"
+#include "positioning.h"  
 
 static const char *TAG = "ui_events";
 
-// Callbacks für verschiedene Module
-static void positioning_istwert_update_callback(const char* value)
-{
-    if (objects.positionierung_istwert != NULL) {
-        lv_label_set_text(objects.positionierung_istwert, value);
-    }
-     else {
-        error_handler_report(ERROR_UI_OBJECT_NULL, "positionierung_istwert");  // ← FEHLER MELDEN
-    }
-}
-
-static void calibration_status_callback(const char* parameter, const char* value)
-{
-    ESP_LOGI(TAG, "Calibration update: %s = %s", parameter, value);
-    // Hier können Kalibrierungs-UI-Elemente aktualisiert werden
-}
-
-static void settings_update_callback(const char* setting, const char* value)
-{
-    ESP_LOGI(TAG, "Settings update: %s = %s", setting, value);
-    // Hier können Settings-UI-Elemente aktualisiert werden
-}
-
-// Handler für MQTT Nachrichten
-void ui_handle_mqtt_message(const char* topic, const char* data)
-{
-    ESP_LOGI(TAG, "UI received MQTT message");
-    message_router_handle(topic, data);
-}
-
-// Event Callback für Buttons (erweitert)
-static void button_event_handler(lv_event_t * e)
-{
+// Vereinfachter Button Handler
+static void button_event_handler(lv_event_t * e) {
     lv_obj_t * btn = lv_event_get_target(e);
     
     // Hauptbildschirm Buttons
@@ -68,33 +30,21 @@ static void button_event_handler(lv_event_t * e)
         loadScreen(SCREEN_ID_SCREEN_HELP);
     }
 
-    // Positionierung Screen
-    else if (btn == objects.positionierung_start) {
-        ESP_LOGI(TAG, "Start button pressed");
-        positioning_start();
-    }
-    else if (btn == objects.button_back) {
+    // Navigation Buttons
+    else if (btn == objects.button_back || 
+             btn == objects.calibration_back || 
+             btn == objects.setting_back || 
+             btn == objects.help_back) {
         ESP_LOGI(TAG, "Back button pressed");
         loadScreen(SCREEN_ID_SCREEN_MAIN);
     }
 
-    // Kalibrierung Screen
-    else if (btn == objects.calibration_back) {
-        ESP_LOGI(TAG, "Back button pressed");
-        loadScreen(SCREEN_ID_SCREEN_MAIN);
-    }
-    // Settings Screen
-    else if (btn == objects.setting_back) {
-        ESP_LOGI(TAG, "Back button pressed");
-        loadScreen(SCREEN_ID_SCREEN_MAIN);
-    }
-    // Help Screen
-    else if (btn == objects.help_back) {
-        ESP_LOGI(TAG, "Back button pressed");
-        loadScreen(SCREEN_ID_SCREEN_MAIN);
+    // Modul-spezifische Actions
+    else if (btn == objects.positionierung_start) {
+        ESP_LOGI(TAG, "Positioning Start button pressed");
+        positioning_start();  // Einzige direkte Abhängigkeit!
     }
 }
-
 
 static void button_matrix_event_handler(lv_event_t * e)
 {
@@ -144,15 +94,16 @@ static void button_matrix_event_handler(lv_event_t * e)
     }
 }
 
-void ui_events_init(void)
-{
-    // Alle Module initialisieren
-    positioning_init(positioning_istwert_update_callback);
-    calibration_init(calibration_status_callback);
-    settings_init(settings_update_callback);
-    help_init();
+
+void ui_handle_mqtt_message(const char* topic, const char* data) {
+    ESP_LOGI(TAG, "UI received MQTT message");
+    message_router_handle(topic, data);
+}
+
+void ui_events_init(void) {
     
-    // Event Registrierungen...
+    
+    // Nur reine UI-Event-Registrierung
     lv_obj_add_event_cb(objects.positionierung, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.kalibrierung, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.settings, button_event_handler, LV_EVENT_CLICKED, NULL);
@@ -163,5 +114,9 @@ void ui_events_init(void)
     lv_obj_add_event_cb(objects.positionierung_btnmatrix, button_matrix_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.calibration_back, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.setting_back, button_event_handler, LV_EVENT_CLICKED, NULL);
-    lv_obj_add_event_cb(objects.help_back, button_event_handler, LV_EVENT_CLICKED, NULL);   
+    lv_obj_add_event_cb(objects.help_back, button_event_handler, LV_EVENT_CLICKED, NULL);
+    
+    ESP_LOGI(TAG, "UI events initialized (decoupled)");
 }
+
+
