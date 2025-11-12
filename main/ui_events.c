@@ -127,11 +127,6 @@ static void button_matrix_event_handler(lv_event_t * e)
 }
 
 
-void ui_handle_mqtt_message(const char* topic, const char* data) {
-    ESP_LOGI(TAG, "UI received MQTT message");
-    message_router_handle(topic, data);
-}
-
 void ui_events_init(void) {
     
     message_bus_subscribe(MSG_POSITIONING_ISTWERT, ui_message_handler);
