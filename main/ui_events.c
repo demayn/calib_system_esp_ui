@@ -5,8 +5,40 @@
 #include "message_router.h"
 #include "error_handler.h"
 #include "positioning.h"  
+#include "message_bus.h"
 
 static const char *TAG = "ui_events";
+
+static void ui_message_handler(const message_t* msg)
+{
+    switch(msg->type) {
+        case MSG_POSITIONING_ISTWERT:
+            ESP_LOGI(TAG, "UI: Received istwert update: %s", msg->data);
+            if (objects.positionierung_istwert != NULL) {
+                lv_label_set_text(objects.positionierung_istwert, msg->data);
+                ESP_LOGI(TAG, "UI: Istwert updated to: %s", msg->data);
+            } else {
+                ESP_LOGE(TAG, "UI: positionierung_istwert is NULL!");
+            }
+            break;
+            
+        case MSG_CALIBRATION_STATUS:
+            ESP_LOGI(TAG, "UI: Calibration status: %s", msg->data);
+            // Hier später Kalibrierungs-UI updaten
+            break;
+            
+        case MSG_SETTINGS_UPDATE:
+            ESP_LOGI(TAG, "UI: Settings update: %s", msg->data);
+            // Hier später Settings-UI updaten
+            break;
+            
+        default:
+            ESP_LOGW(TAG, "UI: Unknown message type: %d", msg->type);
+            break;
+    }
+}
+
+
 
 // Vereinfachter Button Handler
 static void button_event_handler(lv_event_t * e) {
@@ -102,6 +134,10 @@ void ui_handle_mqtt_message(const char* topic, const char* data) {
 
 void ui_events_init(void) {
     
+    message_bus_subscribe(MSG_POSITIONING_ISTWERT, ui_message_handler);
+    message_bus_subscribe(MSG_CALIBRATION_STATUS, ui_message_handler);
+    message_bus_subscribe(MSG_SETTINGS_UPDATE, ui_message_handler);
+    ESP_LOGI(TAG, "UI subscribed to message bus");
     
     // Nur reine UI-Event-Registrierung
     lv_obj_add_event_cb(objects.positionierung, button_event_handler, LV_EVENT_CLICKED, NULL);
@@ -116,7 +152,7 @@ void ui_events_init(void) {
     lv_obj_add_event_cb(objects.setting_back, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.help_back, button_event_handler, LV_EVENT_CLICKED, NULL);
     
-    ESP_LOGI(TAG, "UI events initialized (decoupled)");
+    ESP_LOGI(TAG, "UI events initialized");
 }
 
 

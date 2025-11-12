@@ -6,19 +6,8 @@
 
 static const char *TAG = "calibration";
 
-static void calibration_message_handler(const message_t* msg) {
-    switch(msg->type) {
-        case MSG_CALIBRATION_STATUS:
-            ESP_LOGI(TAG, "Calibration status update: %s", msg->data);
-            // Hier später UI Updates über Message Bus
-            break;
-        default:
-            break;
-    }
-}
 
 void calibration_init(void) {
-    message_bus_subscribe(MSG_CALIBRATION_STATUS, calibration_message_handler);
     ESP_LOGI(TAG, "Calibration module initialized");
 }
 

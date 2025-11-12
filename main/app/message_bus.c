@@ -34,11 +34,16 @@ void message_bus_subscribe(message_type_t type, message_handler_t handler) {
 }
 
 void message_bus_publish(const message_t* message) {
-    ESP_LOGI(TAG, "Publishing message type %d", message->type);
+    ESP_LOGI(TAG, "Publishing message type %d to %d subscribers", message->type, subscriber_count);
     
     for (int i = 0; i < subscriber_count; i++) {
         if (subscribers[i].type == message->type) {
+            ESP_LOGI(TAG, "Calling handler for subscriber %d", i);
             subscribers[i].handler(message);
         }
+    }
+    
+    if (subscriber_count == 0) {
+        ESP_LOGW(TAG, "No subscribers for message type %d", message->type);
     }
 }

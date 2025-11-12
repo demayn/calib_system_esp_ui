@@ -8,21 +8,8 @@
 
 static const char *TAG = "positioning";
 
-static void positioning_message_handler(const message_t* msg)
-{
-    switch(msg->type) {
-        case MSG_POSITIONING_ISTWERT:
-            ESP_LOGI(TAG, "Updating istwert with: %s", msg->data);
-            // UI Update über Message Bus statt direktem Callback
-            break;
-        default:
-            break;
-    }
-}
-
 void positioning_init(void)
 {
-    message_bus_subscribe(MSG_POSITIONING_ISTWERT, positioning_message_handler);
     ESP_LOGI(TAG, "Positioning module initialized");
 }
 
@@ -37,6 +24,7 @@ void positioning_handle_message(const char* topic, const char* data)
             .data = data
         };
         message_bus_publish(&msg);
+        ESP_LOGI(TAG, "Published istwert to message bus: %s", data);
     }
 }
 
