@@ -6,14 +6,18 @@
 #include "lvgl.h"
 #include "bsp/esp-bsp.h"
 #include "bsp/display.h"
+
+// Fehlerbehandlung einbinden
 #include "error_handler.h"  
 
 // UI einbinden
 #include "ui_events.h"
-#include "ui/ui.h"
-#include "ui/screens.h"
+#include "ui.h"
+
+// Netzwerkdienste einbinden
 #include "wifi_controller.h"
 #include "mqtt_controller.h"
+
 // Module einbinden
 #include "calibration.h"
 #include "message_bus.h"

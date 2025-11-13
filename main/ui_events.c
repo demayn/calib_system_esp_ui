@@ -1,5 +1,4 @@
-#include "ui/screens.h"
-#include "ui/ui.h"
+#include "ui.h"
 #include "esp_log.h"
 #include "string.h"
 #include "error_handler.h"
@@ -35,7 +34,7 @@ static void ui_message_handler(const message_t* msg)
     }
 }
 
-// NEUE Funktion: Sollwert im UI aktualisieren
+//Sollwert im UI aktualisieren
 static void update_sollwert_display(void)
 {
     if (objects.positioning_sollwert_eingabe != NULL) {
@@ -104,19 +103,24 @@ static void button_event_handler(lv_event_t * e) {
         loadScreen(SCREEN_ID_SCREEN_MAIN);
     }
 
-    // ENTFERNT: positionierung_start - existiert nicht mehr
-    
-    // NEU: Delete Button
+        
+    // Delete Button
     else if (btn == objects.positionierung_sollwert_delete) {
         ESP_LOGI(TAG, "Delete button pressed");
         positioning_clear_sollwert();
         update_sollwert_display();
     }
-    // NEU: Send Button
-    else if (btn == objects.positionierung_sollwert_send) {
+    // Send_x Button
+    else if (btn == objects.positionierung_sollwert_send_x) {
         ESP_LOGI(TAG, "Send button pressed");
-        positioning_send_sollwert();
-        update_sollwert_display(); // Display zurücksetzen
+        positioning_send_sollwert_x();
+        update_sollwert_display(); 
+    }
+    // Send_y Button
+    else if (btn == objects.positionierung_sollwert_send_y) {
+        ESP_LOGI(TAG, "Send Y button pressed");
+        positioning_send_sollwert_y();
+        update_sollwert_display(); 
     }
 }
 
@@ -139,9 +143,8 @@ void ui_events_init(void) {
     lv_obj_add_event_cb(objects.setting_back, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.help_back, button_event_handler, LV_EVENT_CLICKED, NULL);
     
-    // NEUE Event Handler
     lv_obj_add_event_cb(objects.positionierung_sollwert_delete, button_event_handler, LV_EVENT_CLICKED, NULL);
-    lv_obj_add_event_cb(objects.positionierung_sollwert_send, button_event_handler, LV_EVENT_CLICKED, NULL);
-    
+    lv_obj_add_event_cb(objects.positionierung_sollwert_send_x, button_event_handler, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_event_cb(objects.positionierung_sollwert_send_y, button_event_handler, LV_EVENT_CLICKED, NULL);
     ESP_LOGI(TAG, "UI events initialized");
 }

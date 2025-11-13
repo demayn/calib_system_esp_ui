@@ -1,10 +1,7 @@
 #ifndef MQTT_CONTROLLER_H
 #define MQTT_CONTROLLER_H
 
-#include "esp_event.h"
-#include "esp_log.h"
-#include "mqtt_client.h"
-#include "freertos/queue.h"
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {

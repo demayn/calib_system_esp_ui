@@ -8,6 +8,7 @@
 #include "error_handler.h"
 #include "message_router.h"
 
+
 static const char *TAG = "mqtt_controller";
 
 static esp_mqtt_client_handle_t client = NULL;

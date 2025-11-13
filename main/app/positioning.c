@@ -58,7 +58,7 @@ void positioning_clear_sollwert(void)
     ESP_LOGI(TAG, "Sollwert gelöscht");
 }
 
-void positioning_send_sollwert(void)
+void positioning_send_sollwert_x(void)
 {
     if (!mqtt_is_connected()) {
         error_handler_report(ERROR_MQTT_NOT_CONNECTED, "positioning_send_sollwert");
@@ -71,7 +71,26 @@ void positioning_send_sollwert(void)
     }
     
     ESP_LOGI(TAG, "Sende Sollwert: %s", current_sollwert);
-    mqtt_publish_message("positionierung/sollwert", current_sollwert);
+    mqtt_publish_message(TOPIC_CMD_POSITIONING_SOLLWERT_X, current_sollwert);
+    
+    // Sollwert zurücksetzen nach dem Senden
+    strcpy(current_sollwert, "");
+}
+
+void positioning_send_sollwert_y(void)
+{
+    if (!mqtt_is_connected()) {
+        error_handler_report(ERROR_MQTT_NOT_CONNECTED, "positioning_send_sollwert");
+        return;
+    }
+    
+    if (strlen(current_sollwert) == 0) {
+        ESP_LOGW(TAG, "Kein Sollwert zum Senden vorhanden");
+        return;
+    }
+    
+    ESP_LOGI(TAG, "Sende Sollwert: %s", current_sollwert);
+    mqtt_publish_message(TOPIC_CMD_POSITIONING_SOLLWERT_Y, current_sollwert);
     
     // Sollwert zurücksetzen nach dem Senden
     strcpy(current_sollwert, "");
