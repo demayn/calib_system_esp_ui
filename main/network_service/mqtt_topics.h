@@ -5,6 +5,7 @@
 #define TOPIC_CMD_POSITIONING_START    "positionierung/start"
 #define TOPIC_CMD_POSITIONING_STOP     "positionierung/stop" 
 #define TOPIC_CMD_CALIBRATION_START    "calibration/start"
+#define TOPIC_CMD_POSITIONING_SOLLWERT "positionierung/sollwert" 
 
 // Für Subscriptions incoming - nur zur Dokumentation
 #define TOPIC_DATA_ISTWERT             "positionierung/istwert"

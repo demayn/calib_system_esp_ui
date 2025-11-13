@@ -23,12 +23,10 @@ static void ui_message_handler(const message_t* msg)
             
         case MSG_CALIBRATION_STATUS:
             ESP_LOGI(TAG, "UI: Calibration status: %s", msg->data);
-            // Hier später Kalibrierungs-UI updaten
             break;
             
         case MSG_SETTINGS_UPDATE:
             ESP_LOGI(TAG, "UI: Settings update: %s", msg->data);
-            // Hier später Settings-UI updaten
             break;
             
         default:
@@ -37,7 +35,43 @@ static void ui_message_handler(const message_t* msg)
     }
 }
 
+// NEUE Funktion: Sollwert im UI aktualisieren
+static void update_sollwert_display(void)
+{
+    if (objects.positioning_sollwert_eingabe != NULL) {
+        const char* sollwert = positioning_get_current_sollwert();
+        lv_label_set_text(objects.positioning_sollwert_eingabe, 
+                         strlen(sollwert) > 0 ? sollwert : "eingeben...");
+        ESP_LOGI(TAG, "Sollwert Display updated: %s", sollwert);
+    }
+}
 
+static void button_matrix_event_handler(lv_event_t * e)
+{
+    lv_obj_t * obj = lv_event_get_target(e);
+    uint16_t btn_id = lv_btnmatrix_get_selected_btn(obj);
+    
+    if(btn_id == LV_BTNMATRIX_BTN_NONE) return;
+    
+    const char * txt = lv_btnmatrix_get_btn_text(obj, btn_id);
+    ESP_LOGI(TAG, "Button matrix pressed: %s", txt);
+    
+    // Nur Zahlen 0-9 verarbeiten, + und - ignorieren
+    if(strcmp(txt, "0") == 0 || strcmp(txt, "1") == 0 || strcmp(txt, "2") == 0 ||
+       strcmp(txt, "3") == 0 || strcmp(txt, "4") == 0 || strcmp(txt, "5") == 0 ||
+       strcmp(txt, "6") == 0 || strcmp(txt, "7") == 0 || strcmp(txt, "8") == 0 ||
+       strcmp(txt, "9") == 0) {
+        
+        // Aktuellen Sollwert holen und neue Zahl anhängen
+        const char* current = positioning_get_current_sollwert();
+        char new_sollwert[32];
+        snprintf(new_sollwert, sizeof(new_sollwert), "%s%s", current, txt);
+        
+        // Sollwert setzen und Display aktualisieren
+        positioning_set_sollwert(new_sollwert);
+        update_sollwert_display();
+    }
+}
 
 // Vereinfachter Button Handler
 static void button_event_handler(lv_event_t * e) {
@@ -70,61 +104,21 @@ static void button_event_handler(lv_event_t * e) {
         loadScreen(SCREEN_ID_SCREEN_MAIN);
     }
 
-    // Modul-spezifische Actions
-    else if (btn == objects.positionierung_start) {
-        ESP_LOGI(TAG, "Positioning Start button pressed");
-        positioning_start();  // Einzige direkte Abhängigkeit!
+    // ENTFERNT: positionierung_start - existiert nicht mehr
+    
+    // NEU: Delete Button
+    else if (btn == objects.positionierung_sollwert_delete) {
+        ESP_LOGI(TAG, "Delete button pressed");
+        positioning_clear_sollwert();
+        update_sollwert_display();
+    }
+    // NEU: Send Button
+    else if (btn == objects.positionierung_sollwert_send) {
+        ESP_LOGI(TAG, "Send button pressed");
+        positioning_send_sollwert();
+        update_sollwert_display(); // Display zurücksetzen
     }
 }
-
-static void button_matrix_event_handler(lv_event_t * e)
-{
-    lv_obj_t * obj = lv_event_get_target(e);
-    uint16_t btn_id = lv_btnmatrix_get_selected_btn(obj);
-    
-    if(btn_id == LV_BTNMATRIX_BTN_NONE) return;
-    
-    const char * txt = lv_btnmatrix_get_btn_text(obj, btn_id);
-    ESP_LOGI(TAG, "Button matrix pressed: %s", txt);
-    
-    if(strcmp(txt, "1") == 0) {
-        ESP_LOGI(TAG, "1 gedrückt");
-    }
-    else if(strcmp(txt, "2") == 0) {
-        ESP_LOGI(TAG, "2 gedrückt");
-    }
-    else if(strcmp(txt, "3") == 0) {
-        ESP_LOGI(TAG, "3 gedrückt");
-    }
-    else if(strcmp(txt, "4") == 0) {
-        ESP_LOGI(TAG, "4 gedrückt");
-    }
-    else if(strcmp(txt, "5") == 0) {
-        ESP_LOGI(TAG, "5 gedrückt");
-    }
-    else if(strcmp(txt, "6") == 0) {
-        ESP_LOGI(TAG, "6 gedrückt");
-    }
-    else if(strcmp(txt, "7") == 0) {
-        ESP_LOGI(TAG, "7 gedrückt");
-    }
-    else if(strcmp(txt, "8") == 0) {
-        ESP_LOGI(TAG, "8 gedrückt");
-    }
-    else if(strcmp(txt, "9") == 0) {
-        ESP_LOGI(TAG, "9 gedrückt");
-    }
-    else if(strcmp(txt, "0") == 0) {
-        ESP_LOGI(TAG, "0 gedrückt");
-    }
-    else if(strcmp(txt, "+") == 0) {
-        ESP_LOGI(TAG, "+ gedrückt");
-    }
-    else if(strcmp(txt, "-") == 0) {
-        ESP_LOGI(TAG, "- gedrückt");
-    }
-}
-
 
 void ui_events_init(void) {
     
@@ -133,20 +127,21 @@ void ui_events_init(void) {
     message_bus_subscribe(MSG_SETTINGS_UPDATE, ui_message_handler);
     ESP_LOGI(TAG, "UI subscribed to message bus");
     
-    // Nur reine UI-Event-Registrierung
+    // Event Handler registrieren
     lv_obj_add_event_cb(objects.positionierung, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.kalibrierung, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.settings, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.manuell_1, button_event_handler, LV_EVENT_CLICKED, NULL);
     
-    lv_obj_add_event_cb(objects.positionierung_start, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.button_back, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.positionierung_btnmatrix, button_matrix_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.calibration_back, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.setting_back, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.help_back, button_event_handler, LV_EVENT_CLICKED, NULL);
     
+    // NEUE Event Handler
+    lv_obj_add_event_cb(objects.positionierung_sollwert_delete, button_event_handler, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_event_cb(objects.positionierung_sollwert_send, button_event_handler, LV_EVENT_CLICKED, NULL);
+    
     ESP_LOGI(TAG, "UI events initialized");
 }
-
-
