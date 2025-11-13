@@ -6,6 +6,7 @@
 #include "string.h"
 #include "mqtt_topics.h"
 #include "error_handler.h"
+#include "message_router.h"
 
 static const char *TAG = "mqtt_controller";
 
@@ -114,9 +115,6 @@ void mqtt_process_ui_updates(void)
     while (xQueueReceive(ui_update_queue, &update, 0) == pdTRUE) {
         ESP_LOGI(TAG, "Processing UI update - Topic: %s, Data: %s", update.topic, update.data);
         
-        // Hier können wir jetzt sicher LVGL aufrufen, da wir im Haupttask sind
-        // Diese Funktion muss von ui_events.c bereitgestellt werden
-        extern void ui_handle_mqtt_message(const char* topic, const char* data);
-        ui_handle_mqtt_message(update.topic, update.data);
+        message_router_handle(update.topic, update.data);
     }
 }

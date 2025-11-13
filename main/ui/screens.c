@@ -139,6 +139,7 @@ void create_screen_screen_positioning() {
             objects.positionierung_start = obj;
             lv_obj_set_pos(obj, 845, 458);
             lv_obj_set_size(obj, 100, 70);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff2cad00), LV_PART_MAIN | LV_STATE_DEFAULT);
             {
                 lv_obj_t *parent_obj = obj;
                 {
@@ -146,6 +147,7 @@ void create_screen_screen_positioning() {
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_32, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_label_set_text(obj, "Start");
                 }
             }
@@ -175,6 +177,7 @@ void create_screen_screen_positioning() {
                 NULL,
             };
             lv_btnmatrix_set_map(obj, map);
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_32, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
         {
             // button_back
@@ -200,17 +203,13 @@ void create_screen_screen_positioning() {
             // positionierung_istwert
             lv_obj_t *obj = lv_label_create(parent_obj);
             objects.positionierung_istwert = obj;
-            lv_obj_set_pos(obj, 435, 311);
+            lv_obj_set_pos(obj, 579, 318);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_width(obj, 15, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_color(obj, lv_color_hex(0xff323232), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_opa(obj, 50, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_label_set_text(obj, "wird empfangen...");
-        }
-        {
-            lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 305, 311);
-            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_obj_set_style_text_font(obj, &lv_font_montserrat_32, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_label_set_text(obj, "Istwert: ");
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
@@ -218,6 +217,18 @@ void create_screen_screen_positioning() {
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_48, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_label_set_text(obj, "Positionierung");
+        }
+        {
+            // positionierung_not_used_istwert_label
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            objects.positionierung_not_used_istwert_label = obj;
+            lv_obj_set_pos(obj, 435, 318);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_color(obj, lv_color_hex(0xff323232), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_width(obj, 15, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_opa(obj, 50, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_label_set_text(obj, "Istwert:");
         }
     }
     
@@ -260,6 +271,56 @@ void create_screen_screen_setting() {
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_48, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_label_set_text(obj, "Einstellungen");
         }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 599, 358);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "SSID: ");
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 640, 374);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "23456789");
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 568, 374);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Passwort: ");
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 640, 358);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "TheLAN");
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 611, 316);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_label_set_text(obj, "WLAN");
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 614, 434);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_label_set_text(obj, "MQTT");
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 541, 472);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Sub: positionierung/istwert");
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 549, 488);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Pub: positionierung/start");
+        }
     }
     
     tick_screen_screen_setting();
@@ -301,6 +362,12 @@ void create_screen_screen_help() {
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_48, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_label_set_text(obj, "Benutzerhandbuch");
         }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 401, 255);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Hauptmenue\nPositionierung - Starten und Steuern der Positioniervorgaenge\nKalibrierung - Durchfuehrung von Kalibrierungsprozessen\nEinstellungen - Systemkonfiguration und Netzwerkeinstellungen\nHilfe - Bedienungsanleitung und Informationen\n\nPositionierung\nStartet und stoppt den Positioniervorgang. Der aktuelle Istwert wird \nlive angezeigt. Ueber den Ziffernblock koennen Zielpositionen \neingegeben werden. Die Plus/Minus Tasten ermoeglichen Feineinstellungen.\n\nKalibrierung\nInitiiert den Kalibrierungsprozess. Zeigt den Fortschritt und das Ergebnis \nder Kalibrierung an. Ermoeglicht die Konfiguration von Kalibrierungsparametern.\n\nSystemstatus\nZeigt den Netzwerkstatus mit WiFi und MQTT Verbindung. \nSystemfehler und Warnungen werden angezeigt. \nDer aktuelle Betriebsmodus ist einsehbar.\n");
+        }
     }
     
     tick_screen_screen_help();
@@ -341,6 +408,24 @@ void create_screen_screen_calibration() {
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_48, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_label_set_text(obj, "Kalibrierung");
+        }
+        {
+            // calibration_start_button
+            lv_obj_t *obj = lv_btn_create(parent_obj);
+            objects.calibration_start_button = obj;
+            lv_obj_set_pos(obj, 515, 311);
+            lv_obj_set_size(obj, 250, 100);
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, 0, 0);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_label_set_text(obj, "Start");
+                }
+            }
         }
     }
     

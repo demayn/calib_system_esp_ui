@@ -6,10 +6,11 @@ extern "C" {
 #endif
 
 void help_init(void);
+void help_handle_message(const char* topic, const char* data);
 void help_show_page(int page);
-void help_handle_mqtt_message(const char* topic, const char* data);
 
 #ifdef __cplusplus
 }
 #endif
+
 #endif
