@@ -333,53 +333,59 @@ void create_screen_screen_setting() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 599, 358);
+            lv_obj_set_pos(obj, 351, 306);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "SSID: ");
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 640, 374);
+            lv_obj_set_pos(obj, 388, 322);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "23456789");
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 568, 374);
+            lv_obj_set_pos(obj, 320, 322);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Passwort: ");
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 640, 358);
+            lv_obj_set_pos(obj, 388, 306);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "TheLAN");
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 611, 316);
+            lv_obj_set_pos(obj, 363, 264);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_label_set_text(obj, "WLAN");
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 614, 434);
+            lv_obj_set_pos(obj, 366, 382);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_label_set_text(obj, "MQTT");
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 541, 472);
+            lv_obj_set_pos(obj, 293, 420);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Sub: positionierung/istwert");
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 549, 488);
+            lv_obj_set_pos(obj, 301, 436);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Pub: positionierung/start");
+        }
+        {
+            lv_obj_t *obj = lv_keyboard_create(parent_obj);
+            lv_obj_set_pos(obj, 513, 489);
+            lv_obj_set_size(obj, 767, 311);
+            lv_obj_set_style_align(obj, LV_ALIGN_DEFAULT, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
     }
     
@@ -424,7 +430,7 @@ void create_screen_screen_help() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 401, 255);
+            lv_obj_set_pos(obj, 401, 301);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Hauptmenue\nPositionierung - Starten und Steuern der Positioniervorgaenge\nKalibrierung - Durchfuehrung von Kalibrierungsprozessen\nEinstellungen - Systemkonfiguration und Netzwerkeinstellungen\nHilfe - Bedienungsanleitung und Informationen\n\nPositionierung\nStartet und stoppt den Positioniervorgang. Der aktuelle Istwert wird \nlive angezeigt. Ueber den Ziffernblock koennen Zielpositionen \neingegeben werden. Die Plus/Minus Tasten ermoeglichen Feineinstellungen.\n\nKalibrierung\nInitiiert den Kalibrierungsprozess. Zeigt den Fortschritt und das Ergebnis \nder Kalibrierung an. Ermoeglicht die Konfiguration von Kalibrierungsparametern.\n\nSystemstatus\nZeigt den Netzwerkstatus mit WiFi und MQTT Verbindung. \nSystemfehler und Warnungen werden angezeigt. \nDer aktuelle Betriebsmodus ist einsehbar.\n");
         }
