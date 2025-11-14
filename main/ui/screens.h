@@ -18,11 +18,15 @@ typedef struct _objects_t {
     lv_obj_t *positionierung;
     lv_obj_t *manuell_1;
     lv_obj_t *led_wifi;
-    lv_obj_t *positionierung_start;
+    lv_obj_t *positionierung_sollwert_send_x;
     lv_obj_t *positionierung_btnmatrix;
     lv_obj_t *button_back;
     lv_obj_t *positionierung_istwert;
     lv_obj_t *positionierung_not_used_istwert_label;
+    lv_obj_t *obj0;
+    lv_obj_t *positionierung_sollwert_delete;
+    lv_obj_t *positioning_sollwert_eingabe;
+    lv_obj_t *positionierung_sollwert_send_y;
     lv_obj_t *setting_back;
     lv_obj_t *help_back;
     lv_obj_t *calibration_back;

@@ -13,6 +13,7 @@
         "calibration.h": "c",
         "help.h": "c",
         "mqtt_topics.h": "c",
-        "screens.h": "c"
+        "screens.h": "c",
+        "message_bus.h": "c"
     }
 }
