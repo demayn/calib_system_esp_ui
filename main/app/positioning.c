@@ -32,15 +32,6 @@ void positioning_handle_message(const char* topic, const char* data)
     }
 }
 
-void positioning_start(void)
-{
-    if (!mqtt_is_connected()) {
-        error_handler_report(ERROR_MQTT_NOT_CONNECTED, "positioning_start");
-        return;
-    }
-    ESP_LOGI(TAG, "Start");
-    mqtt_publish_message(TOPIC_CMD_POSITIONING_START, "1");
-}
 
 void positioning_set_sollwert(const char* sollwert)
 {
@@ -51,6 +42,7 @@ void positioning_set_sollwert(const char* sollwert)
     
     ESP_LOGI(TAG, "Sollwert gesetzt: %s", current_sollwert);
 }
+
 
 void positioning_clear_sollwert(void)
 {

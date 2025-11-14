@@ -2,8 +2,8 @@
 #include "esp_log.h"
 #include "string.h"
 #include "error_handler.h"
-#include "positioning.h"  
-#include "message_bus.h"
+#include "positioning.h"  //für befehle
+#include "message_bus.h" //für Ereignisse
 
 static const char *TAG = "ui_events";
 
