@@ -77,9 +77,9 @@ void create_screen_screen_main() {
             }
         }
         {
-            // manuell_1
+            // help
             lv_obj_t *obj = lv_button_create(parent_obj);
-            objects.manuell_1 = obj;
+            objects.help = obj;
             lv_obj_set_pos(obj, 647, 476);
             lv_obj_set_size(obj, 370, 117);
             {
@@ -208,7 +208,7 @@ void create_screen_screen_positioning() {
             lv_obj_set_style_border_width(obj, 15, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_color(obj, lv_color_hex(0xff323232), LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 50, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_label_set_text(obj, "wird empfangen...");
+            lv_label_set_text(obj, "Wird empfangen...");
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
@@ -269,7 +269,7 @@ void create_screen_screen_positioning() {
             lv_obj_set_style_border_color(obj, lv_color_hex(0xff323232), LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_width(obj, 15, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 50, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_label_set_text(obj, "eingeben...");
+            lv_label_set_text(obj, "Bitte eingeben...");
         }
         {
             // positionierung_sollwert_send_y

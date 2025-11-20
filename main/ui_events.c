@@ -89,7 +89,7 @@ static void button_event_handler(lv_event_t * e) {
         ESP_LOGI(TAG, "Settings button pressed");
         loadScreen(SCREEN_ID_SCREEN_SETTING);
     }
-    else if (btn == objects.manuell_1) {  
+    else if (btn == objects.help) {  
         ESP_LOGI(TAG, "Help button pressed");
         loadScreen(SCREEN_ID_SCREEN_HELP);
     }
@@ -135,7 +135,7 @@ void ui_events_init(void) {
     lv_obj_add_event_cb(objects.positionierung, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.kalibrierung, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.settings, button_event_handler, LV_EVENT_CLICKED, NULL);
-    lv_obj_add_event_cb(objects.manuell_1, button_event_handler, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_event_cb(objects.help, button_event_handler, LV_EVENT_CLICKED, NULL);
     
     lv_obj_add_event_cb(objects.button_back, button_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.positionierung_btnmatrix, button_matrix_event_handler, LV_EVENT_CLICKED, NULL);
