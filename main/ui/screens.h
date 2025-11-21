@@ -16,7 +16,7 @@ typedef struct _objects_t {
     lv_obj_t *kalibrierung;
     lv_obj_t *settings;
     lv_obj_t *positionierung;
-    lv_obj_t *manuell_1;
+    lv_obj_t *help;
     lv_obj_t *led_wifi;
     lv_obj_t *positionierung_sollwert_send_x;
     lv_obj_t *positionierung_btnmatrix;
