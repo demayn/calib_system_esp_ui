@@ -25,6 +25,12 @@ void message_bus_subscribe(message_type_t type, message_handler_t handler) {
         ESP_LOGE(TAG, "Cannot subscribe - max subscribers reached");
         return;
     }
+    for (int i = 0; i < subscriber_count; i++) {
+        if (subscribers[i].type == type && subscribers[i].handler == handler) {
+            ESP_LOGW(TAG, "Already subscribed to message type %d", type);
+            return;
+        }
+    }
     
     subscribers[subscriber_count].type = type;
     subscribers[subscriber_count].handler = handler;
@@ -34,7 +40,7 @@ void message_bus_subscribe(message_type_t type, message_handler_t handler) {
 }
 
 void message_bus_publish(const message_t* message) {
-    ESP_LOGI(TAG, "Publishing message type %d to %d subscribers", message->type, subscriber_count);
+    ESP_LOGI(TAG, "Publishing message type %d (topic: %s)", message->type, message->topic);
     
     for (int i = 0; i < subscriber_count; i++) {
         if (subscribers[i].type == message->type) {
@@ -46,4 +52,37 @@ void message_bus_publish(const message_t* message) {
     if (subscriber_count == 0) {
         ESP_LOGW(TAG, "No subscribers for message type %d", message->type);
     }
+}
+
+void message_bus_unsubscribe(message_type_t type, message_handler_t handler) {
+    for (int i = 0; i < subscriber_count; i++) {
+        if (subscribers[i].type == type && subscribers[i].handler == handler) {
+            subscribers[i] = subscribers[subscriber_count - 1];
+            subscriber_count--;
+            ESP_LOGI(TAG, "Unsubscribed from message type %d", type);
+            return;
+        }
+    }
+    ESP_LOGW(TAG, "Handler not found for unsubscribe (type %d)", type);
+}
+
+
+void message_bus_create_and_publish(message_type_t type, const char* topic, const char* data) {
+    message_t msg = { .type = type };
+    
+    if (topic != NULL) {
+        strncpy(msg.topic, topic, sizeof(msg.topic) - 1);
+        msg.topic[sizeof(msg.topic) - 1] = '\0';
+    } else {
+        msg.topic[0] = '\0';
+    }
+    
+    if (data != NULL) {
+        strncpy(msg.data, data, sizeof(msg.data) - 1);
+        msg.data[sizeof(msg.data) - 1] = '\0';
+    } else {
+        msg.data[0] = '\0';
+    }
+    
+    message_bus_publish(&msg);
 }

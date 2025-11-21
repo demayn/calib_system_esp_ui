@@ -26,13 +26,8 @@ void settings_handle_message(const char* topic, const char* data) {
     ESP_LOGI(TAG, "Handling MQTT message - Topic: %s, Data: %s", topic, data);
 
     if (strcmp(topic, TOPIC_DATA_SETTINGS_UPDATE) == 0) {
-        message_t msg = {
-            .type = MSG_SETTINGS_UPDATE,
-            .topic = topic,
-            .data = data
-        };
-        message_bus_publish(&msg);
-    }
+    message_bus_create_and_publish(MSG_SETTINGS_UPDATE, topic, data);
+}
 }
 
 void settings_save_config(void) {

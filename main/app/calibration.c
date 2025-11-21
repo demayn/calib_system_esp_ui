@@ -15,13 +15,8 @@ void calibration_handle_message(const char* topic, const char* data) {
     ESP_LOGI(TAG, "Handling MQTT message - Topic: %s, Data: %s", topic, data);
     
     if (strcmp(topic, TOPIC_DATA_CALIBRATION_STATUS) == 0) {
-        message_t msg = {
-            .type = MSG_CALIBRATION_STATUS,
-            .topic = topic,
-            .data = data
-        };
-        message_bus_publish(&msg);
-    }
+    message_bus_create_and_publish(MSG_CALIBRATION_STATUS, topic, data);
+}
 }
 
 void calibration_start(void) {
