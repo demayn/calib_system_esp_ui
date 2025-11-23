@@ -55,7 +55,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
                     event->topic_len, event->topic,
                     event->data_len, event->data);
             
-            // UI Update in Queue stellen (statt direkt LVGL aufzurufen)
+            // UI Update in Queue stellen
             if (ui_update_queue != NULL) {
                 mqtt_ui_update_t update;
                 snprintf(update.topic, sizeof(update.topic), "%.*s", event->topic_len, event->topic);
@@ -68,7 +68,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
             break;
             
         default:
-            (void)event;  // Mark as unused to avoid warning
+            (void)event;  // Als unbenutzt markieren
             break;
     }
 }
@@ -85,7 +85,7 @@ void mqtt_app_start(void)
     
     // MQTT Konfiguration
     esp_mqtt_client_config_t mqtt_cfg = {
-        .broker.address.uri = "mqtt://192.168.137.1",  // Deine Broker IP
+        .broker.address.uri = MQTT_BROKER_URI,
     };
     
     client = esp_mqtt_client_init(&mqtt_cfg);

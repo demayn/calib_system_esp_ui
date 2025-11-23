@@ -1,6 +1,10 @@
 #ifndef MQTT_TOPICS_H
 #define MQTT_TOPICS_H
 
+//Broker IP-Adresse
+#define MQTT_BROKER_URI "mqtt://192.168.137.1"
+
+
 // NUR für Publishing outgoing - das ist der echte Gewinn!
 #define TOPIC_CMD_POSITIONING_START    "positionierung/start"
 #define TOPIC_CMD_POSITIONING_STOP     "positionierung/stop" 

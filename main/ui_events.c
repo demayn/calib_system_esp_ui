@@ -45,7 +45,7 @@ static void update_sollwert_display(void)
     }
 }
 
-static void button_matrix_event_handler(lv_event_t * e)
+static void button_matrix_event_handler(lv_event_t * e)  // das kann der EEZ Editor eigentlich auch....
 {
     lv_obj_t * obj = lv_event_get_target(e);
     uint16_t btn_id = lv_btnmatrix_get_selected_btn(obj);

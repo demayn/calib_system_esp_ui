@@ -16,4 +16,4 @@ void message_router_handle(const char* topic, const char* data);
 }
 #endif
 
-#endif /* MESSAGE_ROUTER_H */
+#endif
