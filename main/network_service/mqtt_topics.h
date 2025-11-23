@@ -6,16 +6,13 @@
 
 
 // NUR für Publishing outgoing - das ist der echte Gewinn!
-#define TOPIC_CMD_POSITIONING_START    "positionierung/start"
-#define TOPIC_CMD_POSITIONING_STOP     "positionierung/stop" 
 #define TOPIC_CMD_CALIBRATION_START    "calibration/start"
 #define TOPIC_CMD_POSITIONING_SOLLWERT_X "positionierung/sollwert_x" 
 #define TOPIC_CMD_POSITIONING_SOLLWERT_Y "positionierung/sollwert_y"
 
 // Für Subscriptions incoming - nur zur Dokumentation
-#define TOPIC_DATA_ISTWERT             "positionierung/istwert"
-#define TOPIC_DATA_CALIBRATION_STATUS  "calibration/status"
-#define TOPIC_DATA_SETTINGS_UPDATE     "settings/update"
+#define TOPIC_DATA_ISTWERT_X            "positionierung/istwert_x"
+#define TOPIC_DATA_ISTWERT_Y           "positionierung/istwert_y"
 
 
 //QoS Level (Quality of Service)

@@ -21,9 +21,13 @@ void positioning_handle_message(const char* topic, const char* data)
 {
     ESP_LOGI(TAG, "Handling MQTT message - Topic: %s, Data: %s", topic, data);
 
-    if (strcmp(topic, TOPIC_DATA_ISTWERT) == 0) {
-    message_bus_create_and_publish(MSG_POSITIONING_ISTWERT, topic, data);
-    ESP_LOGI(TAG, "Published istwert to message bus: %s", data);
+    if (strcmp(topic, TOPIC_DATA_ISTWERT_X) == 0) {
+    message_bus_create_and_publish(MSG_POSITIONING_ISTWERT_X, topic, data);
+    ESP_LOGI(TAG, "Published istwert X to message bus: %s", data);
+
+    } else if (strcmp(topic, TOPIC_DATA_ISTWERT_Y) == 0) {
+    message_bus_create_and_publish(MSG_POSITIONING_ISTWERT_Y, topic, data);
+    ESP_LOGI(TAG, "Published istwert Y to message bus: %s", data);
 }
 }
 

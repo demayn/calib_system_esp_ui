@@ -10,16 +10,24 @@ static const char *TAG = "ui_events";
 static void ui_message_handler(const message_t* msg)
 {
     switch(msg->type) {
-        case MSG_POSITIONING_ISTWERT:
-            ESP_LOGI(TAG, "UI: Received istwert update: %s", msg->data);
-            if (objects.positionierung_istwert != NULL) {
-                lv_label_set_text(objects.positionierung_istwert, msg->data);
-                ESP_LOGI(TAG, "UI: Istwert updated to: %s", msg->data);
+        case MSG_POSITIONING_ISTWERT_X:
+            ESP_LOGI(TAG, "UI: Received istwert X update: %s", msg->data);
+            if (objects.positionierung_istwert_x != NULL) {
+                lv_label_set_text(objects.positionierung_istwert_x, msg->data);
+                ESP_LOGI(TAG, "UI: Istwert X updated to: %s", msg->data);
             } else {
-                ESP_LOGE(TAG, "UI: positionierung_istwert is NULL!");
+                ESP_LOGE(TAG, "UI: positionierung_istwert_x is NULL!");
             }
             break;
-            
+        case MSG_POSITIONING_ISTWERT_Y:
+            ESP_LOGI(TAG, "UI: Received istwert Y update: %s", msg->data);
+            if (objects.positionierung_istwert_y != NULL) {
+                lv_label_set_text(objects.positionierung_istwert_y, msg->data);
+                ESP_LOGI(TAG, "UI: Istwert Y updated to: %s", msg->data);
+            } else {
+                ESP_LOGE(TAG, "UI: positionierung_istwert_y is NULL!");
+            }
+            break;
         case MSG_CALIBRATION_STATUS:
             ESP_LOGI(TAG, "UI: Calibration status: %s", msg->data);
             break;
@@ -126,7 +134,8 @@ static void button_event_handler(lv_event_t * e) {
 
 void ui_events_init(void) {
     
-    message_bus_subscribe(MSG_POSITIONING_ISTWERT, ui_message_handler);
+    message_bus_subscribe(MSG_POSITIONING_ISTWERT_X, ui_message_handler);
+    message_bus_subscribe(MSG_POSITIONING_ISTWERT_Y, ui_message_handler);
     message_bus_subscribe(MSG_CALIBRATION_STATUS, ui_message_handler);
     message_bus_subscribe(MSG_SETTINGS_UPDATE, ui_message_handler);
     ESP_LOGI(TAG, "UI subscribed to message bus");

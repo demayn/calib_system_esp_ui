@@ -17,12 +17,6 @@ void message_router_handle(const char* topic, const char* data)
     if (strstr(topic, "positionierung") != NULL) {
         positioning_handle_message(topic, data);
     }
-    else if (strstr(topic, "calibration") != NULL) {
-        calibration_handle_message(topic, data);
-    }
-    else if (strstr(topic, "settings") != NULL) {
-        settings_handle_message(topic, data);
-    }
     else {
         help_handle_message(topic, data);
     }

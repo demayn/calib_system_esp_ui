@@ -22,13 +22,6 @@ void settings_init(void) {
     ESP_LOGI(TAG, "Settings module initialized");
 }
 
-void settings_handle_message(const char* topic, const char* data) {
-    ESP_LOGI(TAG, "Handling MQTT message - Topic: %s, Data: %s", topic, data);
-
-    if (strcmp(topic, TOPIC_DATA_SETTINGS_UPDATE) == 0) {
-    message_bus_create_and_publish(MSG_SETTINGS_UPDATE, topic, data);
-}
-}
 
 void settings_save_config(void) {
     ESP_LOGI(TAG, "Saving settings");
