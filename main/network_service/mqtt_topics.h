@@ -2,7 +2,7 @@
 #define MQTT_TOPICS_H
 
 //Broker IP-Adresse
-#define MQTT_BROKER_URI "mqtt://192.168.137.1"
+#define MQTT_BROKER_URI "mqtt://192.168.0.12"
 
 
 // NUR für Publishing outgoing - das ist der echte Gewinn!

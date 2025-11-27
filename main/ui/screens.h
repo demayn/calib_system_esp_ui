@@ -29,6 +29,8 @@ typedef struct _objects_t {
     lv_obj_t *obj2;
     lv_obj_t *positionierung_istwert_y;
     lv_obj_t *setting_back;
+    lv_obj_t *obj3;
+    lv_obj_t *obj4;
     lv_obj_t *help_back;
     lv_obj_t *calibration_back;
     lv_obj_t *calibration_start_button;

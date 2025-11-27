@@ -43,13 +43,10 @@ void app_main(void)
     error_handler_init(); 
 
 
-    // WiFi initialisieren 
+    // WiFi und MQTT initialisieren 
     ESP_LOGI(TAG, "Initializing WiFi...");
     wifi_init_sta();
 
-    // MQTT initialisieren
-    ESP_LOGI(TAG, "Initializing MQTT...");
-    mqtt_app_start();
 
 
     // Display initialisieren

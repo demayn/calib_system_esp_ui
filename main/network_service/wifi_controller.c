@@ -4,6 +4,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/event_groups.h"
+#include "mqtt_controller.h"
 
 static const char *TAG = "wifi_controller";
 
@@ -15,13 +16,17 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base,
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
         esp_wifi_connect();
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
-        // Einfach neu verbinden - unendlich oft
+        vTaskDelay(pdMS_TO_TICKS(2000));
         esp_wifi_connect();
         ESP_LOGI(TAG, "WiFi disconnected, reconnecting...");
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
         ESP_LOGI(TAG, "Got IP: " IPSTR, IP2STR(&event->ip_info.ip));
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
+
+        // MQTT initialisieren
+        ESP_LOGI(TAG, "Initializing MQTT...");
+        mqtt_app_start();
     }
 }
 
@@ -64,20 +69,10 @@ void wifi_init_sta(void)
 
     ESP_LOGI(TAG, "WiFi station initialization finished");
 
-    /* Warte auf Verbindung oder Fehler */
-    EventBits_t bits = xEventGroupWaitBits(s_wifi_event_group,
-            WIFI_CONNECTED_BIT | WIFI_FAIL_BIT,
-            pdFALSE,
-            pdFALSE,
-            portMAX_DELAY);
 
-    if (bits & WIFI_CONNECTED_BIT) {
-        ESP_LOGI(TAG, "Connected to AP SSID: %s", CONFIG_ESP_WIFI_SSID);
-    } else if (bits & WIFI_FAIL_BIT) {
-        ESP_LOGI(TAG, "Failed to connect to SSID: %s", CONFIG_ESP_WIFI_SSID);
-    } else {
-        ESP_LOGE(TAG, "Unexpected WiFi event");
-    }
+
+
+
 }
 
 EventGroupHandle_t wifi_get_event_group(void)

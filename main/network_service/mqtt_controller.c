@@ -7,6 +7,7 @@
 #include "mqtt_topics.h"
 #include "error_handler.h"
 #include "message_router.h"
+#include "wifi_controller.h"
 
 
 static const char *TAG = "mqtt_controller";
@@ -74,7 +75,13 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 }
 
 void mqtt_app_start(void)
-{
+{   
+    // Sicherstellen, dass WiFi verbunden ist
+    if (!wifi_is_connected()) {
+        ESP_LOGW(TAG, "WiFi not connected, delaying MQTT start");
+        return;
+    }
+    
     ESP_LOGI(TAG, "Starting MQTT Client");
     
     // Queue für UI Updates erstellen
