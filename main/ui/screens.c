@@ -157,7 +157,7 @@ void create_screen_screen_positioning() {
                 "\n",
                 "-",
                 "0",
-                "+",
+                ".",
                 NULL,
             };
             lv_buttonmatrix_set_map(obj, map);

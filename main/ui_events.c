@@ -63,11 +63,11 @@ static void button_matrix_event_handler(lv_event_t * e)  // das kann der EEZ Edi
     const char * txt = lv_btnmatrix_get_btn_text(obj, btn_id);
     ESP_LOGI(TAG, "Button matrix pressed: %s", txt);
     
-    // Nur Zahlen 0-9 verarbeiten, + und - ignorieren
+    // Buttons verarbeiten
     if(strcmp(txt, "0") == 0 || strcmp(txt, "1") == 0 || strcmp(txt, "2") == 0 ||
        strcmp(txt, "3") == 0 || strcmp(txt, "4") == 0 || strcmp(txt, "5") == 0 ||
        strcmp(txt, "6") == 0 || strcmp(txt, "7") == 0 || strcmp(txt, "8") == 0 ||
-       strcmp(txt, "9") == 0) {
+       strcmp(txt, "9") == 0 || strcmp(txt, "-") == 0 || strcmp(txt, ".") == 0 ) {
         
         // Aktuellen Sollwert holen und neue Zahl anhängen
         const char* current = positioning_get_current_sollwert();
